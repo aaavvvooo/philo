@@ -23,6 +23,8 @@ int init (t_philo *philo, t_data *data, int argc, char **argv)
         data->philosophers[j].right_fork = data->forks[i + 1];
         data->philosophers[j].life_time = time_getter();
         data->philosophers[j].last_meal = 0;
+        data->philosophers[j].time_to_eat = data->eat_time;
+        data->philosophers[j].time_to_die = data->die_time;
 
     }
     while (++i < data->p_number)
@@ -40,9 +42,15 @@ int main (int argc, char ** argv)
         return (-1);
     
     if (!init(&philo, &data, argc, argv))
-        return (0);
+        return (-1);
     for (int i = 0; i < data.p_number; ++i)
-        printf("%d, %lld, %lld, %lld, %lld\n", data.philosophers[i].index, data.philosophers[i].last_meal, data.philosophers[i].life_time, data.philosophers[i].time_to_die, data.philosophers[i].time_to_eat);
+        printf("index -> %d, ms since last meal -> %lld, life_time -> %lld, time_to_die -> %lld, time_to_eat -> %lld\n", data.philosophers[i].index, data.philosophers[i].last_meal, data.philosophers[i].life_time, data.philosophers[i].time_to_die, data.philosophers[i].time_to_eat);
+    if(data.p_number == 1)
+    {
+        printf("Isn't it lovely all alone,you might think, but one philosopher always dies, because there's only one fork:( ");
+        return (-1);
+    }
+    
     return (0);
 
 }
